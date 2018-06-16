@@ -9,6 +9,7 @@ gunicorn = "*"
 django-heroku = "*"
 python-binary-memcached = "*"
 django-bmemcached = "*"
+django-redis-cache = "*"
 
 [dev-packages]
 

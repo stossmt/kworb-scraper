@@ -70,7 +70,9 @@ CACHES = {
         'OPTIONS': {
                     'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
                     'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
-            }
+            },
+        "BACKEND": "redis_cache.RedisCache",
+        "LOCATION": os.environ.get('REDIS_URL'),
     }
 }
 
