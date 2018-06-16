@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 gunicorn = "*"
 django-heroku = "*"
+python-binary-memcached = "*"
+django-bmemcached = "*"
 
 [dev-packages]
 
