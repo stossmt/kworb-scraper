@@ -10,6 +10,9 @@ django-heroku = "*"
 python-binary-memcached = "*"
 django-bmemcached = "*"
 django-redis-cache = "*"
+celery = "*"
+django-celery-results = "*"
+django-celerybeat-status = "*"
 
 [dev-packages]
 
