@@ -75,7 +75,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-if DEBUG:
+if not DEBUG:
     from website import secret_key
     SECRET_KEY = secret_key.get_key()
 
