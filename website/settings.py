@@ -5,9 +5,11 @@ import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-DEBUG = os.environ.get('DEBUG')
+DEBUG = os.environ.get(DEBUG)
+
+SECRET_KEY = os.environ.get(SECRET_KEY)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -75,10 +77,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-if not DEBUG:
-    from website import secret_key
-    SECRET_KEY = secret_key.get_key()
-
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -90,7 +89,7 @@ if not DEBUG:
         }
     }
 
-else:
+if not DEBUG:
     CACHES = {
         'default': {
             'BACKEND': 'django_bmemcached.memcached.BMemcached',
