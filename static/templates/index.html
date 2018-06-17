@@ -1,0 +1,23 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Kworb Scraper</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+
+</head>
+<body>
+    <div id="nav"></div>
+        <ul>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'stats' %}">Dashboard</a></li>
+            <li><a href="{% url 'kworb' %}">Radio</a></li>
+        </ul>
+    </div>
+
+    <h1>Hello World!</h1>
+
+</body>
+</html>
