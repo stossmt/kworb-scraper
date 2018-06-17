@@ -20,5 +20,5 @@ task_soft_time_limit = 420
 accept_content = ['application/json']
 
 beat_schedule = {
-    },
+
 }
