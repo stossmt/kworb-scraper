@@ -1,10 +1,45 @@
-div#nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+* {
+    padding: 0px;
+    margin: 0px;
 }
 
-.h1 {
-    background-color: yellow;
+nav {
+    height: 50px;
+}
+
+nav ul {
+
+}
+
+nav ul li {
+    list-style-type: none;
+    width: 150px;
+    float: right;
+    max-width: 130px;
     text-align: center;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    line-height: 50px;
+    display: block;
+}
+
+nav ul li a:hover {
+    color: #ddf7b4;
+}
+
+
+body {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 60px;
+}
+
+h4 {
+    font-weight: bold;
 }

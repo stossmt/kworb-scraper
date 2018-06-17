@@ -1,9 +1,10 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def kworb(request):
     return HttpResponse("Kworb")
 
 
-def stats(request):
-    return HttpResponse("stats")
+def dashboard(request):
+    return render(request, 'dashboard.html')
