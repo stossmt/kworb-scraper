@@ -12,8 +12,3 @@ app = Celery('website')
 app.config_from_object(celeryconfig)
 
 app.autodiscover_tasks([])
-
-# Dumps its own request information
-@app.task(bind=True)
-def debug_task(self):
-    print('Request: {0!r}'.format(self.request))
