@@ -5,9 +5,9 @@ import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DEBUG = True
-
 ALLOWED_HOSTS = []
+
+DEBUG = os.environ.get('DEBUG')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
