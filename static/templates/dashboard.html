@@ -16,5 +16,48 @@
     </ul>
     </nav>
 
+    <div class="dashboard">
+        <div class="menu">
+            <ul>
+                <li><input type="button" class="menu-links" value="Today" onclick="openTab(event, 'first')"/></li>
+                <li><input type="button" class="menu-links" value="Leaderboard" onclick="openTab(event, 'second')"/></li>
+                <li><input type="button" class="menu-links" value="Spotify" onclick="openTab(event, 'third')"/></li>
+            </ul>
+        </div>
+        <div class="content">
+
+            <div id="first" class="menu-content">
+                <h4>At A glance</h4>
+            </div>
+
+             <div id="second" class="menu-content">
+                 <h4>Leaderboard</h4>
+             </div>
+
+            <div id="third" class="menu-content">
+                 <h4>Spotify</h4>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(event, tagName) {
+            var i, tabContent, tabLinks;
+
+            menuContent = document.getElementsByClassName("menu-content");
+            for (i = 0; i < menuContent.length; i++) {
+                menuContent[i].style.display = "none";
+            }
+
+            menuLinks = document.getElementsByClassName("menu-links");
+            for (i = 0; i < menuLinks.length; i++) {
+                menuLinks[i].className = menuLinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tagName).style.display = "block";
+            event.currentTarget.className += " active";
+        }
+    </script>
+
 </body>
 </html>

@@ -43,3 +43,49 @@ h1 {
 h4 {
     font-weight: bold;
 }
+
+.dashboard {
+    margin: 10px;
+}
+
+.menu {
+    overflow: hidden;
+    background-color: #FFFFFF;
+    float: left;
+    width: 200px;
+    margin-right: 20px;
+}
+
+.content {
+    float: left;
+}
+
+.menu input[type=button] {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 15px;
+    background-color: inherit;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 12px;
+    transition: 0.3s;
+    width: 200px;
+    text-align: left;
+}
+
+.menu input[type=button] ul li {
+    list-style-type: none;
+}
+
+.menu input[type=button].active {
+    background-color: #ddf7b4;
+}
+
+.menu input[type=button]:hover {
+    background-color: #edf9e5;
+}
+
+.menu-content {
+    display: none;
+    padding: 6px 12px;
+}
