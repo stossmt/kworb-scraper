@@ -11,14 +11,14 @@ result_serializer = 'json'
 result_persistent = False
 result_expires = 3600
 
-enable_utc = True
-timezone = 'US/Eastern'
-
 task_annotations = {'tasks.add': {'rate_limit': '10/s'}}
 task_soft_time_limit = 420
 
 accept_content = ['application/json']
 
 beat_schedule = {
-
+    'daily-scrape': {
+        'task': 'kworb.tasks.daily_scrape',
+        'schedule': crontab(hour=8),
+    },
 }

@@ -11,4 +11,4 @@ app = Celery('website')
 
 app.config_from_object(celeryconfig)
 
-app.autodiscover_tasks([])
+app.autodiscover_tasks(['dashboard', 'kworb'])
