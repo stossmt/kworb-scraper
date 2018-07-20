@@ -1,121 +1,92 @@
 import requests
 from kworb.models import Song
 from bs4 import BeautifulSoup
-from datetime import date, timedelta
+from datetime import date
+from django.core.exceptions import ValidationError
 
 
-class Scraper(object):
+def scrape_today():
+    scrape(date.today())
 
-    # Scrapes and models today's chart
-    def scrape_today(self):
-        chart = self.scrape_url(date.today())
+
+def scrape(scrape_date):
+    if not chart_exists(scrape_date):
+        chart = scrape_url(scrape_date)
         for song in chart:
-            self.build_song_model(song)
+            build_song_model(song)
 
-    # Scrapes and models all charts from 1/1/2017 to today (inclusive)
-    def scrape_historical(self):
-        date_current = date.today()
-        one_day = timedelta(days=1)
 
-        while date_current.year > 2017:
-            chart = self.scrape_url(date_current)
-            for song in chart:
-                self.build_song_model(song)
-            date_current -= one_day
+def chart_exists(scrape_date):
+    if len(Song.objects.filter(date_created=scrape_date)) < 50:
+        return False
+    return True
 
-    def scrape_date(self, scrape_date):
-        queryset = Song.objects.filter(date_created=scrape_date)
-        if len(queryset) < 50:
-            chart = self.scrape_url(scrape_date)
-            for song in chart:
-                self.build_song_model(song)
 
-    # Scrapes chart at a given date
-    # Returns a list of songs. Each song is a list of that song's attributes
-    def scrape_url(self, scrape_date):
-        try:
-            page = requests.get(self.calc_url(scrape_date))
-        except requests.HTTPError:
-            print("This Kworb address cannot be accessed")
+def scrape_url(scrape_date):
+    page = requests.get(calc_url(scrape_date))
+    soup = BeautifulSoup(page.content, 'html.parser')
 
-        try:
-            soup = BeautifulSoup(page.content, 'html.parser')
-        except BeautifulSoup.HTMLParseError:
-            print("HTML Parsing Error")
+    song_list = list(soup.find_all("tr"))[1:51]
 
-        # Each index in song_rows is a new row in the html data table
-        # Each row contains all data for exactly one song
-        # songRows[0] is the chart header information, so it will be omitted
-        # songRows[1:50] contains data for all 50 songs
+    for count, song in enumerate(song_list):
+        song_list[count] = format_song(song, scrape_date)
 
-        song_rows = list(soup.find_all("tr"))
+    return song_list
 
-        # Iterate through songList (rows)
-        # Divide each song (row) into a list of columns
-        songs = []
-        for song in song_rows[1:51]:
-            tempSong = list(song.find_all("td"))
-            tempSong.insert(0, scrape_date)
 
-            try:
-                self.format_song_data(tempSong)
-            except Exception:
-                printf("Unable to format data")
+def calc_url(scrape_date):
+    date_string = str(scrape_date).replace("-", "")
+    return "https://kworb.net/radio/pop/archives/" + date_string + ".html"
 
-            songs.append(tempSong)
 
-        return songs
+def build_song_model(song):
+    try:
+        Song.objects.create(
+            date_created=song[0],
+            position=song[1],
+            position_change=song[2],
+            artist=song[3],
+            title=song[4],
+            spins=song[5],
+            spins_change=song[6],
+            bullet=song[7],
+            bullet_change=song[8],
+            audience=song[9],
+            audience_change=song[10],
+            days=song[11],
+            peak=song[13]
+        )
 
-    # Parameter: <columns> is a list containing a single songs data, used to create a Song model
-    def build_song_model(self, columns):
-        try:
-            Song.objects.create(
-                date_created=columns[0],
-                position=columns[1],
-                position_change=columns[2],
-                artist=columns[3],
-                title=columns[4],
-                spins=columns[5],
-                spins_change=columns[6],
-                bullet=columns[7],
-                bullet_change=columns[8],
-                audience=columns[9],
-                audience_change=columns[10],
-                days=columns[11],
-                peak=columns[13]
-            )
+    except ValidationError:
+        print('Inputs could not be validated for song model' + song)
 
-        except Exception:
-            print(columns)
-            print("Inputs could not be validated for song model")
 
-    # Generates chart URL based on scrape_date
-    def calc_url(self, scrape_date):
-        wrong_format = str(scrape_date)
-        correct_format = wrong_format.replace("-", "")
-        return "http://kworb.net/radio/pop/archives/" + correct_format + ".html"
+def format_song(song, scrape_date):
+    song = list(song.find_all("td"))
 
-    # Reformats chart data so that it can be modeled correctly
-    def format_song_data(self, columns):
-        # Removes html tags
-        for index, item in enumerate(columns):
-            if index != 0:
-                columns[index] = item.get_text()
+    for count, field in enumerate(song):
+        field = field.get_text()
+        field = parse_null(field)
+        if count in {1, 5, 6, 9}:
+            field = parse_int(field)
+        song[count] = field
 
-        # Kworb indicates 'no change' as "=", but model expects an int
-        self.format_change(columns, 2)
-        self.format_change(columns, 6)
-        self.format_change(columns, 8)
-        self.format_change(columns, 10)
+    song.insert(0, scrape_date)
+    return song
 
-        for index, item in enumerate(columns):
-            if columns[index] == "--":
-                columns[index] = None
 
-    # Converts "=" string to "0", converts "+number" to "number"
-    def format_change(self, columns, index):
-        value = columns[index]
-        if value == "=":
-            columns[index] = 0
-        elif value[0] == "+":
-            columns[index] = value[1:]
+def parse_int(string):
+    if string is None:
+        return string
+    elif string == "=":
+        return '0'
+    elif string[0] == "+":
+        return string[1:]
+    else:
+        return string
+
+
+def parse_null(value):
+    if value == "--":
+        return None
+    return value
