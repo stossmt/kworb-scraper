@@ -1,25 +1,13 @@
 import requests
 from kworb.models import Song
 from bs4 import BeautifulSoup
-from datetime import date
 from django.core.exceptions import ValidationError
 
 
-def scrape_today():
-    scrape(date.today())
-
-
 def scrape(scrape_date):
-    if not chart_exists(scrape_date):
-        chart = scrape_url(scrape_date)
-        for song in chart:
-            build_song_model(song)
-
-
-def chart_exists(scrape_date):
-    if len(Song.objects.filter(date_created=scrape_date)) < 50:
-        return False
-    return True
+    chart = scrape_url(scrape_date)
+    for song in chart:
+        build_song_model(song)
 
 
 def scrape_url(scrape_date):
