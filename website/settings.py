@@ -3,11 +3,11 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+DEBUG = os.environ.get('DEBUG')
+
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'kworb-scraper-staging.herokuapp.com', 'kworb-scraper.herokuapp.com']
-
-DEBUG = os.environ['DEBUG']
-
-SECRET_KEY = os.environ['SECRET_KEY']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
