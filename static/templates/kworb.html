@@ -8,6 +8,11 @@
     <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 </head>
 <body>
+    <script>
+        (function () {
+            window.tableData = {{ chart_today|safe }};
+        })();
+    </script>
     <nav>
     <ul>
         <li><a href="{% url 'kworb' %}">Radio</a></li>
@@ -15,7 +20,8 @@
         <li><a href="{% url 'index' %}">Home</a></li>
     </ul>
     </nav>
-    <h1 style="text-align:center;">Kworb Scraper</h1>
 
+    <div id="kworb-table"></div>
+    <script src="{% static '/js/kworb-table.js' %}"></script>
 </body>
 </html>
