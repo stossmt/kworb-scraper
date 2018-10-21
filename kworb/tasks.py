@@ -38,5 +38,5 @@ def is_chart_empty(date_current):
 
     if not chart:
         return True
-    else
+    else:
         return False
