@@ -15,6 +15,7 @@ django-celery-results = "*"
 django-celerybeat-status = "*"
 requests = "*"
 "beautifulsoup4" = "*"
+"psycopg2-binary" = "*"
 
 [dev-packages]
 
