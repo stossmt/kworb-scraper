@@ -4,18 +4,11 @@ import django_heroku
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DEBUG = False
+DEBUG = True
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = []
-
-if DEBUG:
-    ALLOWED_HOSTS.append('localhost')
-    ALLOWED_HOSTS.append('127.0.0.1')
-else:
-    ALLOWED_HOSTS.append('kworb-scraper-staging.herokuapp.com')
-    ALLOWED_HOSTS.append('kworb-scraper.herokuapp.com')
+ALLOWED_HOSTS = ['kworb-scraper-staging.herokuapp.com', 'kworb-scraper.herokuapp.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -89,7 +82,6 @@ if DEBUG:
 
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'static'),
-        os.path.join(BASE_DIR, 'staticfiles'),
     ]
 
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
