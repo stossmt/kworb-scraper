@@ -8,7 +8,7 @@ DEBUG = False
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['kworb-scraper-staging.herokuapp.com', 'kworb-scraper.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'kworb-scraper-staging.herokuapp.com', 'kworb-scraper.herokuapp.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -98,17 +98,4 @@ if DEBUG:
     }
 
 if not DEBUG:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django_bmemcached.memcached.BMemcached',
-            'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
-            'OPTIONS': {
-                'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
-                'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
-            },
-            "BACKEND": "redis_cache.RedisCache",
-            "LOCATION": os.environ.get('REDIS_URL'),
-        }
-    }
-
     django_heroku.settings(locals())
