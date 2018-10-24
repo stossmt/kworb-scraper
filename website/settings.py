@@ -1,5 +1,5 @@
-import os
 import django_heroku
+import os
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -98,4 +98,6 @@ if DEBUG:
     }
 
 if not DEBUG:
+
+
     django_heroku.settings(locals())
