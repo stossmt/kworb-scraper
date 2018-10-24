@@ -77,6 +77,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
