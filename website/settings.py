@@ -1,4 +1,3 @@
-import django_heroku
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -8,8 +7,6 @@ DEBUG = False
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 ALLOWED_HOSTS = ['127.0.0.1', 'kworb-scraper-staging.herokuapp.com', 'kworb-scraper.herokuapp.com']
-
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -25,7 +22,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -137,4 +133,5 @@ LOGGING = {
 
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
+import django_heroku
 django_heroku.settings(locals())
