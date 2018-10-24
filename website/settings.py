@@ -8,7 +8,14 @@ DEBUG = os.environ.get('DEBUG')
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'kworb-scraper-staging.herokuapp.com', 'kworb-scraper.herokuapp.com']
+ALLOWED_HOSTS = []
+
+if DEBUG:
+    ALLOWED_HOSTS.append('localhost')
+    ALLOWED_HOSTS.append('127.0.0.1')
+else:
+    ALLOWED_HOSTS.append('kworb-scraper-staging.herokuapp.com')
+    ALLOWED_HOSTS.append('kworb-scraper.herokuapp.com')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -77,16 +84,16 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'staticfiles'),
-]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 if DEBUG:
+    STATIC_URL = '/static/'
+
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+        os.path.join(BASE_DIR, 'staticfiles'),
+    ]
+
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
