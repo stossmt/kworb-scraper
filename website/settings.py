@@ -1,3 +1,4 @@
+import django_heroku
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -71,22 +72,14 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-'''
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'test',
-            'USER': 'matt',
-            'PASSWORD': '',
-            'HOST': 'localhost',
-            'PORT': '',
-        }
-    }
+STATIC_URL = '/static/'
 
-if not DEBUG:
-'''
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -122,5 +115,4 @@ LOGGING = {
 
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
-import django_heroku
 django_heroku.settings(locals())
