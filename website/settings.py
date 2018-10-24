@@ -9,7 +9,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 ALLOWED_HOSTS = ['127.0.0.1', 'kworb-scraper-staging.herokuapp.com', 'kworb-scraper.herokuapp.com']
 
-STATICFILES_STORAGE = 'website.storage.WhiteNoiseStaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
